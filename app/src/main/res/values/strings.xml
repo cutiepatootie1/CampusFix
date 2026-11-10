@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">CampusFix</string>
+    <string-array name="category_array">
+        <item>IT</item>
+        <item>Furniture</item>
+        <item>Facility</item>
+        <item>HVAC/Air conditioner</item>
+    </string-array>
+
+    <string-array name="building_array">
+        <item>Science Building</item>
+        <item>Administration Building</item>
+        <item>Dormitories</item>
+        <item>Gymnasium</item>
+    </string-array>
 </resources>
