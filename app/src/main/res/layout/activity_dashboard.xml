@@ -30,7 +30,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Add a hamburger icon via Vector Asset: ic_menu -->
         <ImageView
             android:id="@+id/ivMenu"
             android:layout_width="48dp"
@@ -38,7 +37,7 @@
             android:layout_marginEnd="8dp"
             android:contentDescription="Menu"
             android:padding="12dp"
-            android:src="@android:drawable/ic_menu"
+            android:src="@drawable/ic_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

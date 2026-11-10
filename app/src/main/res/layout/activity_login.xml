@@ -23,7 +23,7 @@
     <LinearLayout
         android:id="@+id/login_fields"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintBottom_toTopOf="@+id/LoginBtn"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -67,7 +67,7 @@
     <Button
         app:layout_constraintTop_toBottomOf="@id/login_fields"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/LoginBtn"
+        android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"

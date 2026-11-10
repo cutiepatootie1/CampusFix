@@ -97,11 +97,128 @@
                 android:textSize="18sp"
                 android:text=""/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Progress Timeline"
-                android:textSize="18sp"/>
+                app:cardElevation="0dp"
+                app:strokeColor="@android:color/darker_gray"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Progress Timeline"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <!-- Step 1: Reported (has connector line below the dot) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:minHeight="64dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.42" />
+
+                        <View
+                            android:id="@+id/dotReported"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@drawable/timeline_dot"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/lineReported"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="#555555"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/dotReported"
+                            app:layout_constraintStart_toStartOf="@id/dotReported"
+                            app:layout_constraintTop_toBottomOf="@id/dotReported" />
+
+                        <TextView
+                            android:id="@+id/tvReportedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="Reported"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/dotReported"
+                            app:layout_constraintStart_toEndOf="@id/dotReported"
+                            app:layout_constraintTop_toTopOf="@id/dotReported" />
+
+                        <TextView
+                            android:id="@+id/tvReportedTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Oct. 22, 2026 - 10:36 AM"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/dotReported"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guideline1"
+                            app:layout_constraintTop_toTopOf="@id/dotReported" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 2: Acknowledged (last step, no connector line) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.42" />
+
+                        <View
+                            android:id="@+id/dotAcknowledged"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@drawable/timeline_dot"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvAcknowledgedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="Acknowledged"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/dotAcknowledged"
+                            app:layout_constraintStart_toEndOf="@id/dotAcknowledged"
+                            app:layout_constraintTop_toTopOf="@id/dotAcknowledged" />
+
+                        <TextView
+                            android:id="@+id/tvAcknowledgedTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Oct. 22, 2026 - 4:26 PM"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/dotAcknowledged"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guideline2"
+                            app:layout_constraintTop_toTopOf="@id/dotAcknowledged" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 
