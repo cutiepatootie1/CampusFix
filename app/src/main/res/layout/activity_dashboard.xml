@@ -198,13 +198,14 @@
 
     <!-- Floating action buttons (speed dial) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabMain"
+        android:id="@+id/fabReport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:contentDescription="Report an issue"
         android:src="@android:drawable/ic_input_add"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -215,9 +216,9 @@
         android:layout_marginEnd="12dp"
         android:text="Report an issue"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/fabMain"
-        app:layout_constraintEnd_toStartOf="@id/fabMain"
-        app:layout_constraintTop_toTopOf="@id/fabMain" />
+        app:layout_constraintBottom_toBottomOf="@id/fabReport"
+        app:layout_constraintEnd_toStartOf="@id/fabReport"
+        app:layout_constraintTop_toTopOf="@id/fabReport" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSecondary1"
@@ -225,22 +226,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:contentDescription="Action 1"
-        android:src="@android:drawable/ic_menu_camera"
+        android:src="@android:drawable/ic_menu_manage"
         app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@id/fabMain"
-        app:layout_constraintEnd_toEndOf="@id/fabMain"
-        app:layout_constraintStart_toStartOf="@id/fabMain" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSecondary2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Action 2"
-        android:src="@android:drawable/ic_menu_gallery"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@id/fabSecondary1"
-        app:layout_constraintEnd_toEndOf="@id/fabMain"
-        app:layout_constraintStart_toStartOf="@id/fabMain" />
+        app:layout_constraintBottom_toTopOf="@id/fabReport"
+        app:layout_constraintEnd_toEndOf="@id/fabReport"
+        app:layout_constraintStart_toStartOf="@id/fabReport" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

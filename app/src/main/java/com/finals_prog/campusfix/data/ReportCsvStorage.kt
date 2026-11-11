@@ -107,7 +107,7 @@ class ReportCsvStorage(context: Context) {
 
         val HEADER = listOf(
             "reportId", "title", "description", "assignedTo",
-            "photoUrl", "building", "room", "category"
+            "photoUrl", "building", "room", "category","status"
         )
     }
 }

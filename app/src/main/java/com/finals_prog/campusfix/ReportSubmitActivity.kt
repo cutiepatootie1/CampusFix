@@ -28,11 +28,10 @@ class ReportSubmitActivity : AppCompatActivity() {
 
     private lateinit var storage: ReportCsvStorage
     private var selectedPhoto: Uri? = null
-    private val photoSubmit = findViewById<Button>(R.id.btn_photo_submit)
-    private val btnSubmit = findViewById<Button>(R.id.btn_submit)
-    private val categorySpinner : Spinner = findViewById(R.id.category_spinner)
-    private val buildingSpinner : Spinner = findViewById(R.id.building_spinner)
-
+    private val photoSubmit by lazy { findViewById<Button>(R.id.btn_photo_submit) }
+    private val btnSubmit by lazy { findViewById<Button>(R.id.btn_submit) }
+    private val categorySpinner by lazy { findViewById<Spinner>(R.id.category_spinner) }
+    private val buildingSpinner by lazy { findViewById<Spinner>(R.id.building_spinner) }
     private val pickPhoto =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
@@ -89,7 +88,6 @@ class ReportSubmitActivity : AppCompatActivity() {
         val reportBody = etReportBody.text.toString()
         val room = etRoom.text.toString()
 
-        // Position 0 is the "Select ..." prompt
         val categoryOk = categorySpinner.selectedItemPosition > 0
         val buildingOk = buildingSpinner.selectedItemPosition > 0
         val category = categorySpinner.selectedItem.toString()
