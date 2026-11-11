@@ -36,6 +36,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -58,6 +59,89 @@
             android:src="@android:drawable/ic_menu_preferences"
             android:contentDescription="filter icon"/>
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/midGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <TextView
+        android:id="@+id/tvActiveHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Active Tickets"
+        android:textSize="18sp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_search_bar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvActive"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/midGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvActiveHeader" />
+
+    <TextView
+        android:id="@+id/tvActiveEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Active Tickets"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rvActive"
+        app:layout_constraintEnd_toEndOf="@id/rvActive"
+        app:layout_constraintStart_toStartOf="@id/rvActive"
+        app:layout_constraintTop_toTopOf="@id/rvActive" />
+
+    <TextView
+        android:id="@+id/tvResolvedHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Resolved Tickets"
+        android:textSize="18sp"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/midGuideline" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResolved"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvResolvedHeader" />
+
+    <TextView
+        android:id="@+id/tvResolvedEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No resolved tickets"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rvResolved"
+        app:layout_constraintEnd_toEndOf="@id/rvResolved"
+        app:layout_constraintStart_toStartOf="@id/rvResolved"
+        app:layout_constraintTop_toTopOf="@id/rvResolved" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

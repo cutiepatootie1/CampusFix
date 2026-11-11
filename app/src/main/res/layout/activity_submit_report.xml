@@ -105,7 +105,7 @@
                 android:textSize="20sp"
                 android:layout_marginTop="15dp"/>
             <Button
-                android:id="@+id/photo_submit"
+                android:id="@+id/btn_photo_submit"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -113,6 +113,7 @@
                 />
 
             <Button
+                android:id="@+id/btn_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
