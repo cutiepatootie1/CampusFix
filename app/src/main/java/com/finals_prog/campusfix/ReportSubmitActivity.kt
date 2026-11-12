@@ -72,12 +72,6 @@ class ReportSubmitActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener { submit() }
     }
 
-    private fun setUpSpinner(spinner: Spinner, arrayRes: Int) {
-        spinner.adapter = ArrayAdapter.createFromResource(
-            this, arrayRes, android.R.layout.simple_spinner_item
-        ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-    }
-
     private fun submit() {
         val etTitle = findViewById<EditText>(R.id.etReportTitle)
         val etReportBody = findViewById<EditText>(R.id.etReportBody)
