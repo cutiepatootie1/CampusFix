@@ -30,13 +30,17 @@
         android:orientation="vertical">
         <EditText
             android:id="@+id/et_email"
+            android:autofillHints="emailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:hint="email address"
             android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/et_password"
+            android:autofillHints="password"
+            android:hint="password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
