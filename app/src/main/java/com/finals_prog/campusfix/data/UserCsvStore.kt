@@ -12,8 +12,8 @@ enum class SignUpResult { SUCCESS, EMAIL_TAKEN }
 
 /**
  * Stores users in <app internal storage>/users.csv
- * Row format: email,salt,passwordHash
- * Passwords are never stored in plain text.
+ * accessible in Android Studio device explorer
+ * root/data/data/com.finals_prog.campusfix/files
  */
 class UserCsvStore(context: Context) {
 

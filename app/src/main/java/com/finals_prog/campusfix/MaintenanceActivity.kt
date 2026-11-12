@@ -22,6 +22,12 @@ class MaintenanceActivity : AppCompatActivity() {
         onAcknowledgeClick = { report -> acknowledge(report) },
         onUpdateClick = { report -> openStatusUpdate(report) }
     )
+    private val adapter = TicketAdapter(null, null) { report ->
+        startActivity(
+            Intent(this, ReportDetailsActivity::class.java)
+                .putExtra(ReportDetailsActivity.EXTRA_REPORT_ID, report.reportId)
+        )
+    }
     private val resolvedAdapter = TicketAdapter(null, null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
