@@ -72,12 +72,6 @@ class ReportSubmitActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener { submit() }
     }
 
-    private fun setUpSpinner(spinner: Spinner, arrayRes: Int) {
-        spinner.adapter = ArrayAdapter.createFromResource(
-            this, arrayRes, android.R.layout.simple_spinner_item
-        ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-    }
-
     private fun submit() {
         val etTitle = findViewById<EditText>(R.id.etReportTitle)
         val etReportBody = findViewById<EditText>(R.id.etReportBody)
@@ -87,15 +81,10 @@ class ReportSubmitActivity : AppCompatActivity() {
         val title = etTitle.text.toString()
         val reportBody = etReportBody.text.toString()
         val room = etRoom.text.toString()
-
-        val categoryOk = categorySpinner.selectedItemPosition > 0
-        val buildingOk = buildingSpinner.selectedItemPosition > 0
         val category = categorySpinner.selectedItem.toString()
         val building = buildingSpinner.selectedItem.toString()
 
         when {
-            !categoryOk -> return toast("Please select a category")
-            !buildingOk -> return toast("Please select a building")
             room.isEmpty() -> return etRoom.setError("Required")
             title.isEmpty() -> return etTitle.setError("Required")
             reportBody.isEmpty() -> return etReportBody.setError("Required")

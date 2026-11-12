@@ -3,8 +3,10 @@ package com.finals_prog.campusfix
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,45 +17,60 @@ import kotlin.jvm.java
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var store : UserCsvStore
+    private val roleSpinner by lazy { findViewById<Spinner>(R.id.spinRole) }
+    private val etEmail by lazy { findViewById<EditText>(R.id.etEmail)}
+    private val etPassword by lazy {findViewById<EditText>(R.id.etPassword)}
+    private val etConfirm by lazy { findViewById<EditText>(R.id.etConfirmPassword) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
         store = UserCsvStore(this)
 
-        val etEmail = findViewById<EditText>(R.id.etEmail)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
-        val etConfirm = findViewById<EditText>(R.id.etConfirmPassword)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.role_choices,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            roleSpinner.adapter = adapter
+        }
 
         findViewById<Button>(R.id.btnSignUp).setOnClickListener {
-            val email = etEmail.text.toString()
-            val password = etPassword.text.toString()
-            val confirmPass = etConfirm.text.toString()
+            submitUser()
+        }
+        findViewById<TextView>(R.id.tvLogin).setOnClickListener { goToLogin() }
+    }
 
-            when {
-                !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
-                    etEmail.error = "Enter a valid email"
+    private fun submitUser() {
+        val email = etEmail.text.toString()
+        val password = etPassword.text.toString()
+        val confirmPass = etConfirm.text.toString()
+        val role = roleSpinner.selectedItem.toString()
 
-                password.length < 6 ->
-                    etPassword.error = "Password must be at least 6 characters"
+        when {
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
+                etEmail.error = "Enter a valid email"
 
-                password != confirmPass ->
-                    etConfirm.error = "Passwords do not match"
+            password.length < 6 ->
+                etPassword.error = "Password must be at least 6 characters"
 
-                else -> when (store.register(email, password)) {
-                    SignUpResult.EMAIL_TAKEN ->
-                        etEmail.error = "An account with this email already exists"
+            password != confirmPass ->
+                etConfirm.error = "Passwords do not match"
 
-                    SignUpResult.SUCCESS -> {
-                        Toast.makeText(this, "Account created. Please log in.", Toast.LENGTH_SHORT)
-                            .show()
-                        goToLogin()
+            else -> when (store.register(email, password, role)) {
+                SignUpResult.EMAIL_TAKEN ->
+                    etEmail.error = "An account with this email already exists"
 
-                    }
+                SignUpResult.SUCCESS -> {
+                    Toast.makeText(this, "Account created. Please log in.", Toast.LENGTH_SHORT)
+                        .show()
+                    goToLogin()
+
                 }
             }
         }
-        findViewById<TextView>(R.id.tvLogin).setOnClickListener { goToLogin() }
     }
 
     private fun goToLogin() {

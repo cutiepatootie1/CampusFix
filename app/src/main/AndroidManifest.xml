@@ -25,6 +25,9 @@
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".DashboardActivity"/>
         <activity android:name=".ReportSubmitActivity"/>
+        <activity android:name=".MaintenanceActivity"/>
+        <activity android:name=".StatusUpdateActivity" android:exported="false" />
+        <activity android:name=".ReportDetailsActivity" android:exported="false" />
     </application>
 
 </manifest>
