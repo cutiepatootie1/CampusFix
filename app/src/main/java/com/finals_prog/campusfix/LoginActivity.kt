@@ -30,10 +30,17 @@ class LoginActivity : AppCompatActivity() {
             } else if (password.isEmpty()) {
                 etPassword.error = "Enter your password"
             } else if (store.authenticate(email, password)) {
-                val intent = Intent(this, DashboardActivity::class.java)
-                intent.putExtra("EMAIL", email)
-                startActivity(intent)
-                finish()
+                if(store.getRole(email).equals("student/faculty")){
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    intent.putExtra("EMAIL", email)
+                    startActivity(intent)
+                    finish()
+                }else if(store.getRole(email).equals("maintenance staff")){
+                    val intent = Intent(this, MaintenanceActivity::class.java)
+                    intent.putExtra("EMAIL",email)
+                    startActivity(intent)
+                    finish()
+                }
             } else {
                 etPassword.error = "Incorrect email or password"
             }

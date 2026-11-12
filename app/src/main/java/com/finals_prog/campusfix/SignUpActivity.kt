@@ -47,14 +47,11 @@ class SignUpActivity : AppCompatActivity() {
         val email = etEmail.text.toString()
         val password = etPassword.text.toString()
         val confirmPass = etConfirm.text.toString()
-        val roleOk = roleSpinner.selectedItemPosition > 0
         val role = roleSpinner.selectedItem.toString()
 
         when {
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
                 etEmail.error = "Enter a valid email"
-
-            !roleOk -> Toast.makeText(this, "Select a role",Toast.LENGTH_SHORT).show()
 
             password.length < 6 ->
                 etPassword.error = "Password must be at least 6 characters"

@@ -174,10 +174,12 @@
                             app:layout_constraintTop_toTopOf="@id/dotReported" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!-- Step 2: Acknowledged (last step, no connector line) -->
+                    <!-- Step 2: Acknowledged -->
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/stepAcknowledged"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:minHeight="64dp">
 
                         <androidx.constraintlayout.widget.Guideline
                             android:id="@+id/guideline2"
@@ -194,6 +196,16 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <View
+                            android:id="@+id/lineAcknowledged"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="#555555"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/dotAcknowledged"
+                            app:layout_constraintStart_toStartOf="@id/dotAcknowledged"
+                            app:layout_constraintTop_toBottomOf="@id/dotAcknowledged" />
+
                         <TextView
                             android:id="@+id/tvAcknowledgedLabel"
                             android:layout_width="wrap_content"
@@ -209,12 +221,54 @@
                             android:id="@+id/tvAcknowledgedTime"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Oct. 22, 2026 - 4:26 PM"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="@id/dotAcknowledged"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/guideline2"
                             app:layout_constraintTop_toTopOf="@id/dotAcknowledged" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- Step 3: Resolved (last step, no connector line) -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/stepResolved"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.42" />
+
+                        <View
+                            android:id="@+id/dotResolved"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@drawable/timeline_dot"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvResolvedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="Resolved"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/dotResolved"
+                            app:layout_constraintStart_toEndOf="@id/dotResolved"
+                            app:layout_constraintTop_toTopOf="@id/dotResolved" />
+
+                        <TextView
+                            android:id="@+id/tvResolvedTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/dotResolved"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guideline3"
+                            app:layout_constraintTop_toTopOf="@id/dotResolved" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>

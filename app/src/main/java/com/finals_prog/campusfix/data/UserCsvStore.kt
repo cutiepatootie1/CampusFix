@@ -43,11 +43,20 @@ class UserCsvStore(context: Context) {
         return MessageDigest.isEqual(attempt.toByteArray(), user.hash.toByteArray())
     }
 
+    @Synchronized
+    fun getRole(email: String): String? {
+        return readUsers().firstOrNull { it.email == normalize(email) }?.role
+    }
+
     private fun readUsers(): List<UserRow> {
         if (!file.exists()) return emptyList()
         return file.readLines().mapNotNull { line ->
             val parts = line.split(",")
-            if (parts.size == 3) UserRow(parts[0], parts[1], parts[2],parts[3]) else null
+            when (parts.size) {
+                4 -> UserRow(parts[0], parts[1], parts[2], parts[3])
+                3 -> UserRow(parts[0], parts[1], parts[2], "user") // legacy rows without a role
+                else -> null
+            }
         }
     }
 

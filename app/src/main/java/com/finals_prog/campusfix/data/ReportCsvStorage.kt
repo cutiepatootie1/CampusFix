@@ -43,7 +43,13 @@ class ReportCsvStorage(context: Context) {
                 photoUrl = cell("photoUrl"),
                 building = cell("building"),
                 room = cell("room"),
-                category = cell("category")
+                category = cell("category"),
+                status = cell("status").ifBlank { Report.STATUS_REPORTED },
+                resolutionNotes = cell("resolutionNotes"),
+                proofPhotos = cell("proofPhotos"),
+                submittedAt = cell("submittedAt"),
+                acknowledgedAt = cell("acknowledgedAt"),
+                resolvedAt = cell("resolvedAt")
             )
         }
     }
@@ -57,8 +63,18 @@ class ReportCsvStorage(context: Context) {
     }
 
     private fun Report.toCsvRow(): String = listOf(
-        reportId, title, description, assignedTo, photoUrl, building, room, category
+        reportId, title, description, assignedTo, photoUrl, building, room, category,
+        status, resolutionNotes, proofPhotos, submittedAt,acknowledgedAt,resolvedAt
     ).joinToString(",") { escape(it) }
+
+    fun update(updated: Report) = synchronized(lock) {
+        val all = readAll().map { if (it.reportId == updated.reportId) updated else it }
+        val text = buildString {
+            append(HEADER.joinToString(",")).append(NEWLINE)
+            all.forEach { append(it.toCsvRow()).append(NEWLINE) }
+        }
+        file.writeText(text)
+    }
 
     private fun escape(value: String): String =
         if (value.any { it == ',' || it == '"' || it == '\n' || it == '\r' }) {
@@ -107,7 +123,9 @@ class ReportCsvStorage(context: Context) {
 
         val HEADER = listOf(
             "reportId", "title", "description", "assignedTo",
-            "photoUrl", "building", "room", "category","status"
+            "photoUrl", "building", "room", "category", "status",
+            "resolutionNotes", "proofPhotos", "submittedAt",
+            "acknowledgedAt","resolvedAt"
         )
     }
 }
