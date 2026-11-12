@@ -19,10 +19,10 @@ class UserCsvStore(context: Context) {
 
     private val file = File(context.filesDir, "users.csv")
 
-    private data class UserRow(val email: String, val salt: String, val hash: String)
+    private data class UserRow(val email: String, val salt: String, val hash: String,val role: String)
 
     @Synchronized
-    fun register(email: String, password: String): SignUpResult {
+    fun register(email: String, password: String, role: String): SignUpResult {
         val normalized = normalize(email)
         if (readUsers().any { it.email == normalized }) return SignUpResult.EMAIL_TAKEN
 
@@ -30,7 +30,7 @@ class UserCsvStore(context: Context) {
         val saltB64 = Base64.encodeToString(salt, Base64.NO_WRAP)
         val hashB64 = hash(password, salt)
 
-        file.appendText("$normalized,$saltB64,$hashB64\n")
+        file.appendText("$normalized,$saltB64,$hashB64,$role\n")
         return SignUpResult.SUCCESS
     }
 
@@ -47,7 +47,7 @@ class UserCsvStore(context: Context) {
         if (!file.exists()) return emptyList()
         return file.readLines().mapNotNull { line ->
             val parts = line.split(",")
-            if (parts.size == 3) UserRow(parts[0], parts[1], parts[2]) else null
+            if (parts.size == 3) UserRow(parts[0], parts[1], parts[2],parts[3]) else null
         }
     }
 

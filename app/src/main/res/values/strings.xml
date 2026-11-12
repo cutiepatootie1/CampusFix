@@ -13,4 +13,9 @@
         <item>Dormitories</item>
         <item>Gymnasium</item>
     </string-array>
+
+    <string-array name="role_choices">
+        <item>student/faculty</item>
+        <item>maintenance staff</item>
+    </string-array>
 </resources>
