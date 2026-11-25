@@ -3,18 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="40dp"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/campus_background"
+    android:fitsSystemWindows="true"
     tools:context=".DashboardActivity">
 
-    <!-- Top bar -->
+    <!-- Top App Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:background="#EEEEEE"
+        android:background="@color/campus_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,10 +24,11 @@
             android:id="@+id/tvAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="CampusFix"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textColor="@color/campus_on_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,51 +37,91 @@
             android:id="@+id/ivMenu"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Menu"
             android:padding="12dp"
             android:src="@drawable/ic_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/campus_on_primary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Welcome -->
+    <!-- Welcome Header -->
     <TextView
         android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:text="Welcome Back, John"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textColor="@color/campus_on_surface"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar" />
 
-    <!-- Stats -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
+        android:text="Track your submitted campus issue reports"
+        android:textColor="@color/campus_on_surface_variant"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+
+    <!-- Summary Stat Cards -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardActive"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        app:cardElevation="0dp"
-        app:strokeColor="@android:color/darker_gray"
+        app:cardBackgroundColor="@color/campus_surface"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/campus_surface_variant"
         app:strokeWidth="1dp"
         app:layout_constraintEnd_toStartOf="@id/cardResolved"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome">
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
 
-        <TextView
-            android:id="@+id/tvActive"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Active Reports: 2"
-            android:textSize="14sp" />
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.05"
+                android:text="ACTIVE REPORTS"
+                android:textColor="@color/campus_accent_amber"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="0"
+                android:textColor="@color/campus_on_surface"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="2" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
@@ -87,93 +129,172 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        app:cardElevation="0dp"
-        app:strokeColor="@android:color/darker_gray"
+        android:layout_marginEnd="20dp"
+        app:cardBackgroundColor="@color/campus_surface"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/campus_surface_variant"
         app:strokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="@id/cardActive"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardActive"
         app:layout_constraintTop_toTopOf="@id/cardActive">
 
-        <TextView
-            android:id="@+id/tvResolved"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Resolved: 5"
-            android:textSize="14sp" />
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.05"
+                android:text="RESOLVED"
+                android:textColor="@color/campus_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvResolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="0"
+                android:textColor="@color/campus_on_surface"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="5" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Recent reports -->
+    <!-- Recent Reports Section Header -->
     <TextView
         android:id="@+id/tvRecent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:text="Recent Reports"
-        android:textSize="14sp"
+        android:textColor="@color/campus_on_surface"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardActive" />
 
+    <!-- Reports RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReports"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="96dp"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="108dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvRecent" />
 
-    <!-- Floating action buttons (speed dial) -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabReport"
-        android:layout_width="wrap_content"
+    <!-- Centered Empty State -->
+    <LinearLayout
+        android:id="@+id/emptyStateLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:contentDescription="Report an issue"
-        android:src="@android:drawable/ic_input_add"
-        app:fabSize="normal"
+        android:layout_marginHorizontal="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRecent"
+        app:layout_constraintVertical_bias="0.35">
 
-    <TextView
-        android:id="@+id/tvReportLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:text="Report an issue"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/fabReport"
-        app:layout_constraintEnd_toStartOf="@id/fabReport"
-        app:layout_constraintTop_toTopOf="@id/fabReport" />
+        <TextView
+            android:id="@+id/tvEmptyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No reports yet"
+            android:textColor="@color/campus_on_surface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tvEmptySubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Tap 'Report an issue' below to log a facility or campus problem."
+            android:textColor="@color/campus_on_surface_variant"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Floating Action Buttons (Speed Dial) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSecondary1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="Action 1"
+        android:layout_marginBottom="14dp"
+        android:contentDescription="Manage or filter reports"
         android:src="@android:drawable/ic_menu_manage"
+        app:backgroundTint="@color/campus_primary_container"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@id/fabReport"
         app:layout_constraintEnd_toEndOf="@id/fabReport"
-        app:layout_constraintStart_toStartOf="@id/fabReport" />
+        app:layout_constraintStart_toStartOf="@id/fabReport"
+        app:tint="@color/campus_on_primary_container" />
 
-    <!-- ===== Menu dropdown (keep these last so they draw on top) ===== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/reportLabelPill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:cardBackgroundColor="@color/campus_surface"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:contentPaddingLeft="12dp"
+        app:contentPaddingRight="12dp"
+        app:contentPaddingTop="6dp"
+        app:contentPaddingBottom="6dp"
+        app:strokeColor="@color/campus_surface_variant"
+        app:strokeWidth="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/fabReport"
+        app:layout_constraintEnd_toStartOf="@id/fabReport"
+        app:layout_constraintTop_toTopOf="@id/fabReport">
 
-    <!-- Transparent scrim: tapping outside the menu closes it -->
+        <TextView
+            android:id="@+id/tvReportLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Report an issue"
+            android:textColor="@color/campus_on_surface"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Report an issue"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/campus_primary"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/campus_on_primary" />
+
+    <!-- ===== Menu Dropdown (Keep last so it draws on top) ===== -->
     <View
         android:id="@+id/menuScrim"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#33000000"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
@@ -184,13 +305,16 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/menuPanel"
-        android:layout_width="200dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
         android:visibility="gone"
-        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/campus_surface"
+        app:cardCornerRadius="14dp"
         app:cardElevation="8dp"
+        app:strokeColor="@color/campus_surface_variant"
+        app:strokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar">
 
@@ -198,7 +322,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="4dp">
+            android:paddingVertical="6dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMenuProfile"
@@ -206,7 +330,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
-                android:text="Profile" />
+                android:paddingHorizontal="16dp"
+                android:text="Profile"
+                android:textColor="@color/campus_on_surface" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMenuMyReports"
@@ -214,13 +340,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
-                android:text="My Reports" />
+                android:paddingHorizontal="16dp"
+                android:text="My Reports"
+                android:textColor="@color/campus_on_surface" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="4dp"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/campus_surface_variant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMenuLogout"
@@ -228,8 +356,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
+                android:paddingHorizontal="16dp"
                 android:text="Logout"
-                android:textColor="@android:color/holo_red_dark" />
+                android:textColor="@color/campus_error" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

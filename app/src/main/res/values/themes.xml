@@ -2,4 +2,18 @@
 <resources>
 
     <style name="Theme.CampusFix" parent="Theme.Material3.Light.NoActionBar" />
+    <style name="Theme.CampusIssueTracker" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/campus_primary</item>
+        <item name="colorOnPrimary">@color/campus_on_primary</item>
+        <item name="colorPrimaryContainer">@color/campus_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/campus_on_primary_container</item>
+        <item name="colorSecondary">@color/campus_secondary</item>
+        <item name="colorOnSecondary">@color/campus_on_secondary</item>
+        <item name="android:colorBackground">@color/campus_background</item>
+        <item name="colorSurface">@color/campus_surface</item>
+        <item name="colorOnSurface">@color/campus_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/campus_on_surface_variant</item>
+        <item name="colorOutline">@color/campus_outline</item>
+        <item name="colorError">@color/campus_error</item>
+    </style>
 </resources>

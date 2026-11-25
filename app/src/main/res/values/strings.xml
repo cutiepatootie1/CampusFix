@@ -15,7 +15,8 @@
     </string-array>
 
     <string-array name="role_choices">
-        <item>student/faculty</item>
+        <item>student</item>
+        <item>faculty</item>
         <item>maintenance staff</item>
     </string-array>
 </resources>

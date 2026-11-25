@@ -7,4 +7,26 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Primary: Deep Campus Forest Green -->
+    <color name="campus_primary">#1B4332</color>
+    <color name="campus_on_primary">#FFFFFF</color>
+    <color name="campus_primary_container">#D8F3DC</color>
+    <color name="campus_on_primary_container">#081C15</color>
+
+    <!-- Secondary: Muted Sage / Slate -->
+    <color name="campus_secondary">#406856</color>
+    <color name="campus_on_secondary">#FFFFFF</color>
+
+    <!-- Surfaces & Text -->
+    <color name="campus_background">#F6F8F7</color>
+    <color name="campus_surface">#FFFFFF</color>
+    <color name="campus_surface_variant">#EBF0ED</color>
+    <color name="campus_on_surface">#141D18</color>
+    <color name="campus_on_surface_variant">#4A5850</color>
+    <color name="campus_outline">#74837B</color>
+
+    <!-- Semantic / Alert Accent (for urgent issue indicators) -->
+    <color name="campus_accent_amber">#B45309</color>
+    <color name="campus_error">#BA1A1A</color>
+    <color name="campus_success">#4BB543</color>
 </resources>
