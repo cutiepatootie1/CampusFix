@@ -28,6 +28,9 @@
         <activity android:name=".MaintenanceActivity"/>
         <activity android:name=".StatusUpdateActivity" android:exported="false" />
         <activity android:name=".ReportDetailsActivity" android:exported="false" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".AdminArchiveActivity"/>
+        <activity android:name=".AssignTaskActivity"/>
     </application>
 
 </manifest>

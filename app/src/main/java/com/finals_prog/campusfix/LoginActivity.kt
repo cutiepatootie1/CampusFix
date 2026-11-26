@@ -90,22 +90,27 @@ class LoginActivity : AppCompatActivity() {
     private fun routeByRole(uid: String, email: String) {
         db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
-                val role = doc.getString("role")?.trim()
+                // Most common cause of "no role": the document ID isn't this user's UID.
+                if (!doc.exists()) {
+                    failLogin("No profile found.")
+                    return@addOnSuccessListener
+                }
 
-                val target = when {
-                    role.equals("student", ignoreCase = true) ->
-                        DashboardActivity::class.java
-                    role.equals("faculty", ignoreCase = true) ->
-                        DashboardActivity::class.java
-                    role.equals("maintenance staff", ignoreCase = true) ->
-                        MaintenanceActivity::class.java
+                val role = doc.getString("role")?.trim().orEmpty()
+
+                // Ignore case, spaces and underscores: "Maintenance Staff", "maintenance_staff", ...
+                val target = when (role.lowercase().filter { it.isLetter() }) {
+                    "student", "faculty" -> DashboardActivity::class.java
+                    "maintenancestaff", "maintenance" -> MaintenanceActivity::class.java
+                    "admin", "administrator" -> AdminActivity::class.java
                     else -> null
                 }
 
                 if (target == null) {
-                    auth.signOut()
-                    loginBtn.isEnabled = true
-                    showError("No role assigned to this account.")
+                    failLogin(
+                        if (role.isEmpty()) "The 'role' field is missing or isn't text."
+                        else "Unrecognized role: \"$role\""
+                    )
                     return@addOnSuccessListener
                 }
 
@@ -115,11 +120,16 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener { e ->
-                auth.signOut()
-                loginBtn.isEnabled = true
-                showError(e.localizedMessage ?: "Could not load your profile")
+                failLogin(e.localizedMessage ?: "Could not load your profile")
             }
     }
+
+    private fun failLogin(message: String) {
+        auth.signOut()
+        loginBtn.isEnabled = true
+        showError(message, 8000L)
+    }
+
     private fun setLoading(isLoading: Boolean) {
         binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.btnLogin.isEnabled = !isLoading

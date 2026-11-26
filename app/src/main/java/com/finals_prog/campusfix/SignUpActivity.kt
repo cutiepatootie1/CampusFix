@@ -71,8 +71,8 @@ class SignUpActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
         val confirmPass = binding.etConfirmPassword.text.toString()
         val role = binding.actvRole.text.toString().trim()
-        val firstName = binding.etFirstName.text.toString()
-        val lastName = binding.etLastName.text.toString()
+        val firstName = binding.etFirstName.text.toString().trim()
+        val lastName = binding.etLastName.text.toString().trim()
 
         when {
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
@@ -134,11 +134,14 @@ class SignUpActivity : AppCompatActivity() {
                         goToLogin()
                     }
                     .addOnFailureListener { e ->
-                        // Roll back so we don't leave an account with no role.
-                        user.delete()
-                        auth.signOut()
-                        setLoading(false)
-                        showError("Could not save your profile")
+                        // Roll back so we don't leave an account with no profile/role.
+                        // Sign out only AFTER the delete finishes: delete() needs the signed-in
+                        // session, so signing out first made the rollback fail silently.
+                        user.delete().addOnCompleteListener {
+                            auth.signOut()
+                            setLoading(false)
+                            showError("Could not save your profile: ${e.localizedMessage ?: "unknown error"}")
+                        }
                     }
             }
             .addOnFailureListener { e ->

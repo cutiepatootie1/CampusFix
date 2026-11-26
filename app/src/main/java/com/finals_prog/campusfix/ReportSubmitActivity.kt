@@ -13,6 +13,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.finals_prog.campusfix.data.CloudinaryUploader
 import com.finals_prog.campusfix.data.Report
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
@@ -20,30 +21,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import java.io.DataOutputStream
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.UUID
 
 class ReportSubmitActivity : AppCompatActivity() {
-
-    companion object {
-        // Cloudinary dashboard -> top-left "Cloud name".
-        private const val CLOUDINARY_CLOUD_NAME = "kbqtj3ps"
-
-        // Settings -> Upload -> Upload presets. Must be created with Signing Mode = "Unsigned".
-        private const val CLOUDINARY_UPLOAD_PRESET = "kotlin_uploads"
-
-        private const val CLOUDINARY_FOLDER = "campusfix/reports"
-    }
-
-    private data class UploadResult(val url: String, val publicId: String)
 
     private val auth by lazy { FirebaseAuth.getInstance() }
     private val firestore by lazy { FirebaseFirestore.getInstance() }
@@ -133,7 +114,7 @@ class ReportSubmitActivity : AppCompatActivity() {
 
                 // 1) Upload the photo (if any) to Cloudinary.
                 val upload = photo?.let {
-                    withContext(Dispatchers.IO) { uploadToCloudinary(it, docRef.id) }
+                    CloudinaryUploader.upload(contentResolver, it, docRef.id, "campusfix/reports")
                 }
 
                 // 2) Save the report document with the hosted image URL.
@@ -161,66 +142,6 @@ class ReportSubmitActivity : AppCompatActivity() {
                 setSubmitting(false)
                 toast("Could not submit report: ${e.localizedMessage ?: e.message}")
             }
-        }
-    }
-
-    /**
-     * Uploads the image to Cloudinary using an unsigned upload preset (no API secret in the app).
-     * Runs a plain multipart POST, so no extra dependency is needed. Call from Dispatchers.IO.
-     */
-    private fun uploadToCloudinary(source: Uri, reportId: String): UploadResult {
-        val boundary = "----CampusFix${UUID.randomUUID()}"
-        val endpoint = "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload"
-        val mime = contentResolver.getType(source) ?: "image/jpeg"
-
-        val conn = (URL(endpoint).openConnection() as HttpURLConnection).apply {
-            requestMethod = "POST"
-            doOutput = true
-            connectTimeout = 15_000
-            readTimeout = 60_000
-            setChunkedStreamingMode(0) // stream the file instead of buffering it in memory
-            setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
-        }
-
-        try {
-            DataOutputStream(conn.outputStream).use { out ->
-                fun field(name: String, value: String) {
-                    out.writeBytes("--$boundary\r\n")
-                    out.writeBytes("Content-Disposition: form-data; name=\"$name\"\r\n\r\n")
-                    out.write(value.toByteArray(Charsets.UTF_8))
-                    out.writeBytes("\r\n")
-                }
-
-                field("upload_preset", CLOUDINARY_UPLOAD_PRESET)
-                field("folder", CLOUDINARY_FOLDER)
-                field("public_id", reportId)
-
-                out.writeBytes("--$boundary\r\n")
-                out.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\"$reportId.jpg\"\r\n")
-                out.writeBytes("Content-Type: $mime\r\n\r\n")
-                contentResolver.openInputStream(source)?.use { it.copyTo(out) }
-                    ?: throw IOException("Cannot read selected photo")
-                out.writeBytes("\r\n--$boundary--\r\n")
-            }
-
-            val code = conn.responseCode
-            val stream = if (code in 200..299) conn.inputStream else conn.errorStream
-            val body = stream?.bufferedReader()?.use { it.readText() }.orEmpty()
-
-            if (code !in 200..299) {
-                val msg = runCatching {
-                    JSONObject(body).getJSONObject("error").getString("message")
-                }.getOrDefault("HTTP $code")
-                throw IOException("Photo upload failed: $msg")
-            }
-
-            val json = JSONObject(body)
-            return UploadResult(
-                url = json.getString("secure_url"),
-                publicId = json.getString("public_id")
-            )
-        } finally {
-            conn.disconnect()
         }
     }
 

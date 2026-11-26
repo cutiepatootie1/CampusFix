@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="6dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivAssignedAvatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@color/campus_primary_container"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvAssignedName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:textColor="@color/campus_on_surface"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Juan Dela Cruz" />
+</LinearLayout>

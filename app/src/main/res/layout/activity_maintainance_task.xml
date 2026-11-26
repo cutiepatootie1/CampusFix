@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="40dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Top bar -->
+    android:background="@color/campus_background"
+    android:fitsSystemWindows="true">
+
+    <!-- Top App Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:background="#EEEEEE"
+        android:background="@color/campus_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,10 +21,11 @@
             android:id="@+id/tvAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:text="Maintenance Portal"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textColor="@color/campus_on_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,69 +34,94 @@
             android:id="@+id/ivMenu"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Menu"
             android:padding="12dp"
             android:src="@drawable/ic_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/campus_on_primary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <LinearLayout
-        android:id="@+id/ll_search_bar"
-        android:layout_width="match_parent"
+    <!-- Search & Filter Bar -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSearch"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="14dp"
+        app:cardBackgroundColor="@color/campus_surface"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
-        <SearchView
-            android:id="@+id/search_bar"
-            android:layout_width="0dp"
-            android:layout_weight=".6"
-            android:layout_height="50dp"
-            android:layout_gravity="fill_horizontal"
-            />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="9dp"
-            android:id="@+id/ic_filter"
-            android:src="@android:drawable/ic_menu_preferences"
-            android:contentDescription="filter icon"/>
-    </LinearLayout>
+        app:strokeColor="@color/campus_surface_variant"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:id="@+id/ll_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="6dp">
+
+            <SearchView
+                android:id="@+id/search_bar"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="Search tickets, rooms, or IDs..." />
+
+            <ImageView
+                android:id="@+id/ic_filter"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Filter tickets"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_preferences"
+                app:tint="@color/campus_primary" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/midGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.56" />
 
+    <!-- Active Tickets Section -->
     <TextView
         android:id="@+id/tvActiveHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="16dp"
-        android:text="Active Tickets"
-        android:textSize="18sp"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:letterSpacing="0.04"
+        android:text="ACTIVE TICKETS"
+        android:textColor="@color/campus_accent_amber"
+        android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_search_bar" />
+        app:layout_constraintTop_toBottomOf="@id/cardSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvActive"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
+        android:paddingVertical="6dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/midGuideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,34 +132,51 @@
         android:id="@+id/tvActiveEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Active Tickets"
+        android:text="No active tickets"
+        android:textColor="@color/campus_on_surface_variant"
+        android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/rvActive"
         app:layout_constraintEnd_toEndOf="@id/rvActive"
         app:layout_constraintStart_toStartOf="@id/rvActive"
         app:layout_constraintTop_toTopOf="@id/rvActive" />
 
+    <!-- Divider between Active and Resolved -->
+    <View
+        android:id="@+id/sectionDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/campus_surface_variant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/midGuideline" />
+
+    <!-- Resolved Tickets Section -->
     <TextView
         android:id="@+id/tvResolvedHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Resolved Tickets"
-        android:textSize="18sp"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="12dp"
+        android:letterSpacing="0.04"
+        android:text="RESOLVED TICKETS"
+        android:textColor="@color/campus_secondary"
+        android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/midGuideline" />
+        app:layout_constraintTop_toBottomOf="@id/sectionDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResolved"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
+        android:paddingVertical="6dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,17 +188,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No resolved tickets"
+        android:textColor="@color/campus_on_surface_variant"
+        android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/rvResolved"
         app:layout_constraintEnd_toEndOf="@id/rvResolved"
         app:layout_constraintStart_toStartOf="@id/rvResolved"
         app:layout_constraintTop_toTopOf="@id/rvResolved" />
 
-    <!-- Transparent scrim: tapping outside the menu closes it -->
+    <!-- Menu Dropdown Overlay -->
     <View
         android:id="@+id/menuScrim"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#33000000"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
@@ -163,21 +212,24 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/menuPanel"
-        android:layout_width="200dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
         android:visibility="gone"
-        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/campus_surface"
+        app:cardCornerRadius="14dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar">
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:strokeColor="@color/campus_surface_variant"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="4dp">
+            android:paddingVertical="6dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMenuProfile"
@@ -185,7 +237,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
-                android:text="Profile" />
+                android:paddingHorizontal="16dp"
+                android:text="Profile"
+                android:textColor="@color/campus_on_surface" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMenuMyReports"
@@ -193,13 +247,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
-                android:text="My Tickets" />
+                android:paddingHorizontal="16dp"
+                android:text="My Tickets"
+                android:textColor="@color/campus_on_surface" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="4dp"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/campus_surface_variant" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMenuLogout"
@@ -207,8 +263,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|center_vertical"
+                android:paddingHorizontal="16dp"
                 android:text="Logout"
-                android:textColor="@android:color/holo_red_dark" />
+                android:textColor="@color/campus_error" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

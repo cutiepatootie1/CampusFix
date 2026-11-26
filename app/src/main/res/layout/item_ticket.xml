@@ -1,48 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardReportItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/campus_surface"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/campus_surface_variant"
+    app:strokeWidth="1dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="12dp">
 
-        <TextView
-            android:id="@+id/tvTicketTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+        <!-- Optional Report Photo Thumbnail -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardThumbnail"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            app:cardBackgroundColor="@color/campus_surface_variant"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/campus_outline"
+            app:strokeWidth="1dp">
 
-        <TextView
-            android:id="@+id/tvTicketStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" />
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Report thumbnail"
+                android:scaleType="centerCrop"
+                tools:src="@android:drawable/ic_menu_gallery" />
+        </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
+        <!-- Ticket ID Badge -->
+        <TextView
+            android:id="@+id/tvTicketId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            >
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUpdateStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="Update Status" />
+            android:layout_marginStart="12dp"
+            android:background="@color/campus_primary_container"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:textColor="@color/campus_on_primary_container"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/cardThumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="#TCK-104" />
+
+        <!-- Status Badge -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.03"
+            android:textColor="@color/campus_accent_amber"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvTicketId"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="ACTIVE" />
+
+        <!-- Issue Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/campus_on_surface"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tvTicketId"
+            tools:text="Flickering fluorescent light" />
+
+        <!-- Building & Room / Category Metadata -->
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/campus_on_surface_variant"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/ivChevron"
+            app:layout_constraintStart_toEndOf="@id/cardThumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="Science Hall - Room 204" />
+
+        <!-- Subtle Trailing Indicator -->
+        <ImageView
+            android:id="@+id/ivChevron"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="View ticket details"
+            android:src="@android:drawable/ic_media_next"
+            app:layout_constraintBottom_toBottomOf="@id/tvLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvLocation"
+            app:tint="@color/campus_on_surface_variant" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="cardThumbnail,tvLocation" />
+
+        <!-- Staff actions: shown only on the maintenance screen -->
+        <LinearLayout
+            android:id="@+id/llActions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrierContent"
+            tools:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAcknowledgedStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="Start working" />
+                android:id="@+id/btnStartWork"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Start Work"
+                android:textAllCaps="false"
+                android:textColor="@color/campus_on_primary"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:backgroundTint="@color/campus_primary"
+                app:cornerRadius="10dp"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResolve"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Mark Resolved"
+                android:textAllCaps="false"
+                android:textColor="@color/campus_on_primary"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:backgroundTint="@color/campus_primary"
+                app:cornerRadius="10dp" />
         </LinearLayout>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

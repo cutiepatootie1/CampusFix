@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/campus_background"
+    android:fitsSystemWindows="true"
+    tools:context=".AssignTaskActivity">
+
+    <!-- Top App Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="68dp"
+        android:background="@color/campus_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Navigate back"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/campus_on_primary" />
+
+        <TextView
+            android:id="@+id/tvReportTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Report Title"
+            android:textColor="@color/campus_on_primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Scrollable Ticket Details -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="18dp">
+
+            <!-- Highlighted Report ID -->
+            <TextView
+                android:id="@+id/tvReportId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#8EF08E"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="2dp"
+                android:text="Report ID"
+                android:textColor="@color/campus_on_surface"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Building | Room -->
+            <TextView
+                android:id="@+id/tvBuildingRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Building | Room"
+                android:textColor="@color/campus_on_surface"
+                android:textSize="14sp" />
+
+            <!-- Category -->
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Category"
+                android:textColor="@color/campus_on_surface"
+                android:textSize="14sp" />
+
+            <!-- Ticket Image Box -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardImageContainer"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginTop="18dp"
+                app:cardBackgroundColor="@color/campus_surface_variant"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/ivReportImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Reported issue photo"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/tvImagePlaceholder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="image"
+                    android:textColor="@color/campus_on_surface"
+                    android:textSize="15sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Description Box -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDescriptionContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:minHeight="140dp"
+                app:cardBackgroundColor="@color/campus_surface_variant"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:text="description text"
+                    android:textColor="@color/campus_on_surface"
+                    android:textSize="14sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- STATE A: No Staff Assigned Yet (Matches wireframe button) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAssignStaff"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:text="Assign staff(s)"
+                android:textAllCaps="false"
+                android:textColor="@color/campus_on_surface"
+                android:textSize="15sp"
+                android:visibility="visible"
+                app:backgroundTint="@color/campus_surface_variant"
+                app:cornerRadius="8dp" />
+
+            <!-- STATE B: Staff Already Assigned + Change Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAssignedStaff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/campus_surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/campus_surface_variant"
+                app:strokeWidth="1dp"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:letterSpacing="0.04"
+                            android:text="ASSIGNED MAINTENANCE STAFF"
+                            android:textColor="@color/campus_on_surface_variant"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnChangeStaff"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:text="Change"
+                            android:textColor="@color/campus_primary"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvAssignedStaff"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_staff_assigned" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -84,7 +84,7 @@ class ReportDetailsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvReportedTime).text = formatTime(report.submittedAt)
 
         val resolved = report.isResolved
-        val acknowledged = report.isAcknowledged || resolved   // Acknowledged or Resolved
+        val acknowledged = report.isAcknowledged || report.isInProgress || resolved   // Acknowledged or Resolved
 
         findViewById<View>(R.id.stepAcknowledged).isVisible = acknowledged
         findViewById<View>(R.id.lineReported).isVisible = acknowledged

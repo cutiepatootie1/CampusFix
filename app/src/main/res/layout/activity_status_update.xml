@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="40dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/campus_background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <!-- Top bar: back arrow + title -->
+    <!-- Top App Bar -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/material_dynamic_secondary80"
+        android:layout_height="64dp"
+        android:background="@color/campus_primary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:paddingHorizontal="8dp">
 
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
             android:padding="12dp"
-            android:src="@android:drawable/ic_media_previous" />
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="@color/campus_on_primary" />
 
         <TextView
             android:id="@+id/tvReportTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Report Title"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textColor="@color/campus_on_primary"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,88 +53,212 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/tvTicketId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ticket ID:"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Building - Room"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvSubmitted"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Submitted:"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Resolution/Repair Notes *Mandatory"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etNotes"
+            <!-- Ticket Metadata Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/edit_text"
-                android:gravity="top|start"
-                android:hint="Describe the work done"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                android:minLines="4" />
+                app:cardBackgroundColor="@color/campus_surface"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/campus_surface_variant"
+                app:strokeWidth="1dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Proof of Completion"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/ivProof"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.05"
+                        android:text="TICKET OVERVIEW"
+                        android:textColor="@color/campus_secondary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTicketId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Ticket ID:"
+                        android:textColor="@color/campus_on_surface"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Building - Room"
+                        android:textColor="@color/campus_on_surface_variant"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvSubmitted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Submitted:"
+                        android:textColor="@color/campus_on_surface_variant"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Resolution Notes Card -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/editbox_background"
-                android:contentDescription="Proof of completion"
-                android:scaleType="centerCrop" />
-
-            <TextView
-                android:id="@+id/tvProofCount"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="No photos added" />
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/campus_surface"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/campus_surface_variant"
+                app:strokeWidth="1dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddMore"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Resolution / Repair Notes"
+                            android:textColor="@color/campus_on_surface"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="*Mandatory"
+                            android:textColor="@color/campus_accent_amber"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Describe the repair or work completed"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="@color/campus_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNotes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|start"
+                            android:importantForAutofill="no"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:minLines="4"
+                            android:textColor="@color/campus_on_surface" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Proof of Completion Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Add more" />
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/campus_surface"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/campus_surface_variant"
+                app:strokeWidth="1dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Proof of Completion"
+                        android:textColor="@color/campus_on_surface"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:layout_marginTop="10dp"
+                        app:cardBackgroundColor="@color/campus_surface_variant"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/campus_outline"
+                        app:strokeWidth="1dp">
+
+                        <ImageView
+                            android:id="@+id/ivProof"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="Proof of completion"
+                            android:scaleType="centerCrop" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvProofCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="No photos added"
+                            android:textColor="@color/campus_on_surface_variant"
+                            android:textSize="13sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAddMore"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Photo"
+                            android:textColor="@color/campus_primary"
+                            app:cornerRadius="10dp"
+                            app:strokeColor="@color/campus_primary" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Primary Submit Action -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirm"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="32dp"
-                android:text="Confirm" />
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="Confirm Resolution"
+                android:textColor="@color/campus_on_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/campus_primary"
+                app:cornerRadius="12dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
