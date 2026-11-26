@@ -71,6 +71,8 @@ class SignUpActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
         val confirmPass = binding.etConfirmPassword.text.toString()
         val role = binding.actvRole.text.toString().trim()
+        val firstName = binding.etFirstName.text.toString()
+        val lastName = binding.etLastName.text.toString()
 
         when {
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() ->
@@ -86,7 +88,7 @@ class SignUpActivity : AppCompatActivity() {
                 binding.tilRole.error = "Select a role"
 
 
-            else -> register(email, password, role)
+            else -> register(email, password, role, firstName, lastName)
         }
     }
     /**
@@ -103,7 +105,8 @@ class SignUpActivity : AppCompatActivity() {
             .joinToString("\n") { "• $it" }
     }
 
-    private fun register(email: String, password: String, role: String) {
+    private fun register(email: String, password: String, role: String, firstName: String,
+                         lastName: String) {
         setLoading(true)
 
         auth.createUserWithEmailAndPassword(email, password)
@@ -117,7 +120,9 @@ class SignUpActivity : AppCompatActivity() {
 
                 val profile = hashMapOf(
                     "email" to email,
-                    "role" to role
+                    "role" to role,
+                    "firstName" to firstName,
+                    "lastName" to lastName
                 )
 
                 db.collection("users").document(user.uid).set(profile)

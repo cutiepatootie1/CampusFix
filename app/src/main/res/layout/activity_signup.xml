@@ -102,7 +102,6 @@
                     app:boxStrokeColor="@color/campus_primary"
                     app:endIconMode="password_toggle"
                     app:endIconTint="@color/campus_on_surface_variant"
-                    app:endIconDrawable="null"
                     app:hintTextColor="@color/campus_primary">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -129,7 +128,6 @@
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxStrokeColor="@color/campus_primary"
                     app:endIconMode="password_toggle"
-                    app:endIconDrawable="null"
                     app:endIconTint="@color/campus_on_surface_variant"
                     app:hintTextColor="@color/campus_primary">
 
@@ -142,6 +140,66 @@
                         android:textColor="@color/campus_on_surface"
                         android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- First Name & Last Name Row -->
+                <LinearLayout
+                    android:id="@+id/nameRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFirstName"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:hint="First name"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/campus_primary"
+                        app:hintTextColor="@color/campus_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLines="1"
+                            android:textColor="@color/campus_on_surface"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilLastName"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:hint="Last name"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/campus_primary"
+                        app:hintTextColor="@color/campus_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName|textCapWords"
+                            android:maxLines="1"
+                            android:textColor="@color/campus_on_surface"
+                            android:textSize="15sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
 
                 <!-- Account Role Dropdown -->
                 <com.google.android.material.textfield.TextInputLayout

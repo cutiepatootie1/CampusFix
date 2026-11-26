@@ -9,14 +9,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.finals_prog.campusfix.data.Report
-import com.finals_prog.campusfix.data.ReportCsvStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MaintenanceActivity : AppCompatActivity() {
-
-    private lateinit var storage: ReportCsvStorage
 
     private val activeAdapter = TicketAdapter(
         onAcknowledgeClick = { report -> acknowledge(report) },
@@ -33,8 +30,6 @@ class MaintenanceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maintainance_task)
-
-        storage = ReportCsvStorage(this)
 
         findViewById<RecyclerView>(R.id.rvActive).adapter = activeAdapter
         findViewById<RecyclerView>(R.id.rvResolved).adapter = resolvedAdapter
@@ -83,8 +78,7 @@ class MaintenanceActivity : AppCompatActivity() {
 
     private fun loadReports() {
         lifecycleScope.launch {
-            val reports = withContext(Dispatchers.IO) { storage.readAll() }
-            showReports(reports)
+
         }
     }
 
@@ -108,10 +102,7 @@ class MaintenanceActivity : AppCompatActivity() {
 
     private fun acknowledge(report: Report) {
         lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                storage.update(report.copy(status = Report.STATUS_ACKNOWLEDGED))
-            }
-            loadReports() // re-binds the list: "Start working" hides, "Update Status" appears
+
         }
     }
 }

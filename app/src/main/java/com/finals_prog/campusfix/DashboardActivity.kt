@@ -2,24 +2,25 @@ package com.finals_prog.campusfix
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.activity.OnBackPressedCallback
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.finals_prog.campusfix.data.Report
-import com.finals_prog.campusfix.data.ReportCsvStorage
-import com.google.android.material.card.MaterialCardView
+import com.finals_prog.campusfix.databinding.ActivityDashboardBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.Dispatchers
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.tasks.await
 
 class DashboardActivity : AppCompatActivity() {
-    private lateinit var storage: ReportCsvStorage
+
     private val tvActive by lazy { findViewById<TextView>(R.id.tvActive) }
     private val tvResolved by lazy { findViewById<TextView>(R.id.tvResolved) }
     private val tvRecent by lazy { findViewById<TextView>(R.id.tvRecent) }
@@ -29,12 +30,15 @@ class DashboardActivity : AppCompatActivity() {
                 .putExtra(ReportDetailsActivity.EXTRA_REPORT_ID, report.reportId)
         )
     }
+    private lateinit var binding: ActivityDashboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
-        storage = ReportCsvStorage(this)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         findViewById<RecyclerView>(R.id.rvReports).adapter = adapter
+        loadUserFirstName()
 
         val menuPanel = findViewById<View>(R.id.menuPanel)
         val menuScrim = findViewById<View>(R.id.menuScrim)
@@ -65,32 +69,59 @@ class DashboardActivity : AppCompatActivity() {
         }
         findViewById<View>(R.id.btnMenuLogout).setOnClickListener {
             setMenuVisible(false)
-            // TODO: clear whatever session/login state is stored
+            FirebaseAuth.getInstance().signOut()
             startActivity(
                 Intent(this, LoginActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )
         }
 
-        val fabReport = findViewById<FloatingActionButton>(R.id.fabReport)
-
-        fabReport.setOnClickListener {
-            val intent = Intent(this, ReportSubmitActivity::class.java)
-            startActivity(intent)
+        findViewById<FloatingActionButton>(R.id.fabReport).setOnClickListener {
+            startActivity(Intent(this, ReportSubmitActivity::class.java))
         }
     }
 
-        override fun onResume() {
-            super.onResume()
-            loadReports()
-        }
+    override fun onResume() {
+        super.onResume()
+        loadUserFirstName()
+        loadReports()
+    }
 
-        private fun loadReports() {
-            lifecycleScope.launch {
-                val reports = withContext(Dispatchers.IO) { storage.readAll() }
+    /** Loads the signed-in user's reports from the Firestore "reports" collection. */
+    private fun loadReports() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        lifecycleScope.launch {
+            try {
+                val snapshot = FirebaseFirestore.getInstance()
+                    .collection("reports")
+                    .whereEqualTo("reporterUid", uid)
+                    .get()
+                    .await()
+
+                // Sort client-side (newest first) so no composite index is required.
+                val reports = snapshot.documents
+                    .mapNotNull { doc ->
+                        val report = doc.toObject(Report::class.java) ?: return@mapNotNull null
+                        // Make sure reportId is populated even if the field is missing.
+                        val fixed = if (report.reportId.isEmpty()) report.copy(reportId = doc.id) else report
+                        // submittedAt is null briefly for a just-written serverTimestamp.
+                        val createdMillis = (doc.getTimestamp("submittedAt") ?: doc.getTimestamp("createdAt"))?.toDate()?.time ?: Long.MAX_VALUE
+                        fixed to createdMillis
+                    }
+                    .sortedByDescending { it.second }
+                    .map { it.first }
+
                 showReports(reports)
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@DashboardActivity,
+                    "Could not load reports: ${e.localizedMessage ?: e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
+    }
 
     private fun showReports(reports: List<Report>) {
         val resolvedCount = reports.count { it.isResolved }
@@ -99,8 +130,29 @@ class DashboardActivity : AppCompatActivity() {
 
         tvRecent.text = if (reports.isEmpty()) "No reports yet" else "Recent Reports"
 
-        // Newest first: the CSV is append-only, so the last rows are the latest
-        adapter.submitList(reports.reversed())
+        // Already sorted newest first in loadReports()
+        adapter.submitList(reports)
     }
 
+    private fun loadUserFirstName() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val tvWelcome = findViewById<TextView>(R.id.tvWelcome)
+
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+                if (!doc.exists()) return@addOnSuccessListener
+
+                // Option A: If you store a "firstName" field directly
+                val firstName = doc.getString("firstName")?.trim()
+                // Option B: Fallback to splitting a "fullName" or "name" field
+                    ?: doc.getString("fullName")?.trim()?.substringBefore(" ")
+
+                if (!firstName.isNullOrEmpty()) {
+                    tvWelcome.text = "Welcome Back, $firstName"
+                }
+            }
+    }
 }

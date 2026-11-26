@@ -93,7 +93,9 @@ class LoginActivity : AppCompatActivity() {
                 val role = doc.getString("role")?.trim()
 
                 val target = when {
-                    role.equals("student/faculty", ignoreCase = true) ->
+                    role.equals("student", ignoreCase = true) ->
+                        DashboardActivity::class.java
+                    role.equals("faculty", ignoreCase = true) ->
                         DashboardActivity::class.java
                     role.equals("maintenance staff", ignoreCase = true) ->
                         MaintenanceActivity::class.java
