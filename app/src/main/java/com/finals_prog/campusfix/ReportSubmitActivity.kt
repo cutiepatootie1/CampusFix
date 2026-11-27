@@ -87,7 +87,7 @@ class ReportSubmitActivity : AppCompatActivity() {
     }
 
     private fun submit() {
-        val currentUser = auth.currentUser
+        val currentUser = auth.currentUser?.uid
         if (currentUser == null) {
             toast("Please sign in before submitting a report.")
             return
@@ -120,14 +120,14 @@ class ReportSubmitActivity : AppCompatActivity() {
                 // 2) Save the report document with the hosted image URL.
                 val reportData = hashMapOf(
                     "reportId" to docRef.id,
-                    "reporterUid" to currentUser.uid,
+                    "reporterUid" to currentUser,
                     "title" to title,
                     "description" to reportBody,
                     "category" to category,
                     "building" to building,
                     "room" to room,
                     "status" to Report.STATUS_REPORTED,
-                    "assignedTo" to "",
+                    "assignedStaff" to emptyList<String>(),
                     "photoUrl" to (upload?.url ?: ""),
                     "photoPublicId" to (upload?.publicId ?: ""),
                     "submittedAt" to FieldValue.serverTimestamp(),

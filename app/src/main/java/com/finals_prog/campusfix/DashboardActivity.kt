@@ -95,7 +95,6 @@ class DashboardActivity : AppCompatActivity() {
             try {
                 val snapshot = FirebaseFirestore.getInstance()
                     .collection("reports")
-                    .whereEqualTo("reporterUid", uid)
                     .get()
                     .await()
 
@@ -128,7 +127,12 @@ class DashboardActivity : AppCompatActivity() {
         tvActive.text = "Active Reports: ${reports.size - resolvedCount}"
         tvResolved.text = "Resolved: $resolvedCount"
 
-        tvRecent.text = if (reports.isEmpty()) "No reports yet" else "Recent Reports"
+        tvRecent.text = if (reports.isEmpty()) "No reports yet"
+        else "Recent Reports"
+        if (reports.isEmpty())
+            binding.emptyStateLayout.isVisible = true
+        else
+            binding.emptyStateLayout.isVisible = false
 
         // Already sorted newest first in loadReports()
         adapter.submitList(reports)
